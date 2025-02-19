@@ -1,26 +1,14 @@
-# Use a stable version of Debian or Alpine as the base image
-FROM alpine
+FROM alpine:latest
 
-# Install MariaDB and dependencies
-RUN apt-get update && apt-get install -y \
-    mariadb-server \
-    mariadb-client \
-    && rm -rf /var/lib/apt/lists/*
+# Install MariaDB using apk
+RUN apk update && apk add --no-cache mariadb mariadb-client mariadb-server-utils
 
-# Configure MariaDB to not run as root
-RUN useradd -r -s /bin/false mariadb
+# Create required directories
+RUN mkdir -p /var/lib/mysql /run/mysqld /var/log/mysql && \
+    chown -R mysql:mysql /var/lib/mysql /run/mysqld /var/log/mysql
 
-# Expose the default MariaDB port
-EXPOSE 4241
+# Expose the MariaDB default port
+EXPOSE 3306
 
-# Set up environment variables for MariaDB
-ENV MYSQL_ROOT_PASSWORD=rootpassword
-ENV MYSQL_USER=user
-ENV MYSQL_PASSWORD=password
-ENV MYSQL_DATABASE=wordpress
-
-# Copy my custom MariaDB configuratin maybe later
-# COPY ./conf/my.cnf /etc/mysql/my.cnf
-
-# Command to run MariaDB server
-CMD ["mysqld"]
+# Start MariaDB when the container runs
+CMD ["mysqld", "--datadir=/var/lib/mysql", "--user=mysql"]
