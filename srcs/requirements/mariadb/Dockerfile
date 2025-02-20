@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine 3.20.6
 
 # Install MariaDB using apk
 RUN apk update && apk add --no-cache mariadb mariadb-client mariadb-server-utils
