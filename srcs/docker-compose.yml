@@ -1,0 +1,31 @@
+version: '3.8'
+
+volumes:
+    mariadb_data:
+        name: mariadb_data
+        driver: local
+        driver_opts:
+            type: none
+            device: /var/lib/mysql
+            o: bind
+
+networks:
+    inception:
+        name: inception
+        driver: bridge
+
+services:
+    mariadb:
+        container_name: mariadb
+        build:
+            context: .
+            dockerfile: srcs/requirements/mariadb/Dockerfile
+        ports:
+            - "3306:3306"
+        volumes:
+            - mariadb_data:/var/lib/mysql
+        networks:
+            - inception
+        env_file:
+            - .env
+        restart: always
