@@ -21,7 +21,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - mariadb:/var/lib/mysql
+            - mariadb_data:/var/lib/mysql
         networks:
             - inception
         env_file:
