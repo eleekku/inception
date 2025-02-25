@@ -1,11 +1,5 @@
 volumes:
     mariadb_data:
-        name: mariadb_data
-        driver: local
-        driver_opts:
-            type: none
-            device: /home/esalmela/data/mariadb
-            o: bind
 
 networks:
     inception:
@@ -21,7 +15,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - mariadb_data:/var/lib/mysql
+            - /home/esalmela/data/mariadb:/var/lib/mysql
         networks:
             - inception
         env_file:
