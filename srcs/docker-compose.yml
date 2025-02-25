@@ -1,5 +1,3 @@
-version: '3.8'
-
 volumes:
     mariadb_data:
         name: mariadb_data
