@@ -17,8 +17,8 @@ networks:
 
 services:
     nginx:
-        container_name: ngninx
-        built:
+        container_name: nginx
+        build:
             context: .
             dockerfile: requirements/nginx/Dockerfile
         ports:
