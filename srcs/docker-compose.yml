@@ -1,6 +1,7 @@
 volumes:
     mariadb:
       driver_opts:
+        type: none
         o: bind
         device: /home/esalmela/data/mariadb
         
