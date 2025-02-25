@@ -19,7 +19,7 @@ services:
         container_name: mariadb
         build:
             context: .
-            dockerfile: srcs/requirements/mariadb/Dockerfile
+            dockerfile: requirements/mariadb/Dockerfile
         ports:
             - "3306:3306"
         volumes:
@@ -27,5 +27,5 @@ services:
         networks:
             - inception
         env_file:
-            - .env
+            - ../.env
         restart: always
