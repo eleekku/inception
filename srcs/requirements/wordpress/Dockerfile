@@ -19,8 +19,6 @@ RUN apk update && apk add --no-cache \
 		php-tokenizer \
 		php-ctype \
 		php-dom \
-		php-filter \
-		php-hash \
 		php-pdo \
 		php-pdo_mysql \
 		php-pdo_sqlite \
@@ -33,7 +31,7 @@ RUN apk update && apk add --no-cache \
 
 EXPOSE 9000
 
-RUN ln -s /usr/bin/php /usr/bin/php
+RUN ln -sf /usr/bin/php /usr/bin/php
 
 RUN mkdir -p /run/php /var/www/html
 
