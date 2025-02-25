@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # Debug: Print environment variables
-echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
-echo "WP_DB_NAME: $WP_DB_NAME"
-echo "WP_DB_USER: $WP_DB_USER"
-echo "WP_DB_PWD: $WP_DB_PWD"
+#echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
+#echo "WP_DB_NAME: $WP_DB_NAME"
+#echo "WP_DB_USER: $WP_DB_USER"
+#echo "WP_DB_PWD: $WP_DB_PWD"
 
 # Prepare directories and rights
 mkdir -p /var/lib/mysql /run/mysqld /var/log/mysql
