@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # Debug: Print environment variables
-#echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
-#echo "WP_DB_NAME: $WP_DB_NAME"
-#echo "WP_DB_USER: $WP_DB_USER"
-#echo "WP_DB_PWD: $WP_DB_PWD"
+echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
+echo "WP_DB_NAME: $WP_DB_NAME"
+echo "WP_DB_USER: $WP_DB_USER"
+echo "WP_DB_PWD: $WP_DB_PWD"
 
 # Prepare directories and rights
 mkdir -p /var/lib/mysql /run/mysqld /var/log/mysql
@@ -29,7 +29,10 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
 
 # Check if the database exists before creating it
 CREATE DATABASE IF NOT EXISTS $WP_DB_NAME CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER IF NOT EXISTS '$WP_DB_USER'@'%' IDENTIFIED BY '$WP_DB_PWD';
+
+# Drop the user if it exists before creating it
+DROP USER IF EXISTS '$WP_DB_USER'@'%';
+CREATE USER '$WP_DB_USER'@'%' IDENTIFIED BY '$WP_DB_PWD';
 GRANT ALL PRIVILEGES ON $WP_DB_NAME.* TO '$WP_DB_USER'@'%';
 GRANT ALL PRIVILEGES ON *.* TO '$WP_DB_USER'@'%' IDENTIFIED BY '$WP_DB_PWD' WITH GRANT OPTION;
 GRANT SELECT ON mysql.* TO '$WP_DB_USER'@'%';
