@@ -16,7 +16,7 @@ networks:
         driver: bridge
 
 services:
-    ngninx:
+    nginx:
         container_name: ngninx
         built:
             context: .
