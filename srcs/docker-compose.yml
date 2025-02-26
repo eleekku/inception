@@ -1,6 +1,12 @@
 volumes:
+    wordpress:
+      driver_opts:
+        type: none
+        o: bind
+        device: /home/esalmela/data/wordpress
     mariadb:
       driver_opts:
+        type: none
         o: bind
         device: /home/esalmela/data/mariadb
         
@@ -10,6 +16,23 @@ networks:
         driver: bridge
 
 services:
+    ngninx:
+        container_name: ngninx
+        built:
+            context: .
+            dockerfile: requirements/nginx/Dockerfile
+        ports:
+            - "443:443"
+        depends_on:
+            - wordpress
+        volumes:
+            - wordpress:/var/www/html
+        env_file:
+            - ../.env
+        networks:
+            - inception
+        restart: always
+
     mariadb:
         container_name: mariadb
         build:
