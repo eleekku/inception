@@ -4,30 +4,30 @@ RUN addgroup -S nginx && \
 	adduser -S -G nginx nginx
 
 RUN apk update && apk add --no-cache \
-        php81 \
-		php81-fpm \
-		php81-mysqli \
-		php81-mbstring \
-		php81-json \
-		php81-session \
-		php81-common \
-		php81-iconv \
-		php81-xml \
-		php81-xmlreader \
-		php81-xmlwriter \
-		php81-simplexml \
-		php81-tokenizer \
-		php81-ctype \
-		php81-dom \
-		php81-filter \
-		php81-hash \
-		php81-pdo \
-		php81-pdo_mysql \
-		php81-pdo_sqlite \
-		php81-phar \
-		php81-posix \
-		php81-openssl \
-		php81-session \
+        php8 \
+		php8-fpm \
+		php8-mysqli \
+		php8-mbstring \
+		php8-json \
+		php8-session \
+		php8-common \
+		php8-iconv \
+		php8-xml \
+		php8-xmlreader \
+		php8-xmlwriter \
+		php8-simplexml \
+		php8-tokenizer \
+		php8-ctype \
+		php8-dom \
+		php8-filter \
+		php8-hash \
+		php8-pdo \
+		php8-pdo_mysql \
+		php8-pdo_sqlite \
+		php8-phar \
+		php8-posix \
+		php8-openssl \
+		php8-session \
 		mariadb-client
 
 EXPOSE 9000
