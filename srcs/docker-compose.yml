@@ -33,6 +33,21 @@ services:
             - inception
         restart: always
 
+    wordpress:
+        container_name: wordpress
+        build:
+            context: .
+            dockerfile: requirements/wordpress/Dockerfile
+        depends_on:
+            - mariadb
+        volumes:
+            - wordpress:/var/www/html
+        networks:
+            - inception
+        env_file:
+            - ../.env
+        restart: always
+
     mariadb:
         container_name: mariadb
         build:
