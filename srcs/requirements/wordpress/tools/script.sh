@@ -16,11 +16,11 @@ EOF
 
 cd /var/www/html/
 
-wget -g https://wordpress.org/latest.tar.gz
+wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp
 
 chmod +x /usr/local/bin/wp
 
-echo "Downloading and installing WordPress"
+echo "Downloading WordPress core..."
 
 wp core download --allow-root
 
