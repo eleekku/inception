@@ -4,36 +4,21 @@ RUN addgroup -S nginx && \
     adduser -S -G nginx nginx
 
 RUN apk update && apk add --no-cache \
-        php \
-        php-fpm \
-        php-mysqli \
-        php-mbstring \
-        php-json \
-        php-session \
-        php-common \
-        php-iconv \
-        php-xml \
-        php-xmlreader \
-        php-xmlwriter \
-        php-simplexml \
-        php-tokenizer \
-        php-ctype \
-        php-dom \
-        php-pdo \
-        php-pdo_mysql \
-        php-pdo_sqlite \
-        php-phar \
-        php-posix \
-        php-openssl \
-        php-session \
-        mariadb-client \
-        wget \
-        curl \
-        tar
+	php82 \
+	php82-phar \
+	php82-curl \
+	php82-fpm \
+	php82-mysqli \
+	php82-mbstring \
+	php82-json \
+	php82-gd \
+	php82-xml \
+	php82-zip \
+	mariadb-client
 
 EXPOSE 9000
 
-RUN ln -sf /usr/bin/php8 /usr/bin/php
+RUN ln -sf /usr/bin/php82 /usr/bin/php
 
 RUN mkdir -p /run/php /var/www/html
 

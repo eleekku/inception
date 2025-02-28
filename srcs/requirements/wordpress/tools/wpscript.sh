@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "memory_limit = 512M" >> /etc/php8/php.ini
+
 # Wait for MariaDB to be ready
 attempts=0
 while ! mariadb -h$MYSQL_HOST -u$WP_DB_USER -p$WP_DB_PWD $WP_DB_NAME &>/dev/null; do
@@ -79,4 +81,4 @@ chown -R nginx:nginx /var/www/html/
 chmod -R 755 /var/www/html/
 
 # Fire up PHP-FPM (-F to keep in foreground and avoid recalling script)
-php-fpm8 -F
+php-fpm82 -F
