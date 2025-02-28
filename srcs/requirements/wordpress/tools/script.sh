@@ -1,66 +1,82 @@
 #!/bin/sh
 
+# Wait for MariaDB to be ready
 attempts=0
-while [ $attempts -lt 5 ]; do
-	if mysqladmin ping -h mysql -u root -p$MYSQL_ROOT_PASSWORD > /dev/null 2>&1; then
-		break
-	fi
-	attempts=$((attempts + 1))
-	sleep 5
+while ! mariadb -h$MYSQL_HOST -u$WP_DB_USER -p$WP_DB_PWD $WP_DB_NAME &>/dev/null; do
+    attempts=$((attempts + 1))
+    echo "MariaDB unavailable. Attempt $attempts: Trying again in 5 sec."
+    if [ $attempts -ge 12 ]; then
+        echo "Max attempts reached. MariaDB connection could not be established."
+        exit 1
+    fi
+    sleep 5
 done
-echo "MariaDB is up"
+echo "MariaDB connection established!"
 
-echo "Listing databases"
-mariadb -h mysql -u $WP_DB_USER -p $WP_DB_PWD -e "show databases;"
+echo "Listing databases:"
+mariadb -h$MYSQL_HOST -u$WP_DB_USER -p$WP_DB_PWD $WP_DB_NAME <<EOF
+SHOW DATABASES;
 EOF
 
+# Set working dir
 cd /var/www/html/
 
+# Download WP CLI
 wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp
 
+# Make it executable
 chmod +x /usr/local/bin/wp
 
+# Download WordPress core
 echo "Downloading WordPress core..."
-
 wp core download --allow-root
 
-echo "Creating wp-config.php"
-
+# Create WordPress database config
+echo "Creating WordPress database config..."
 wp config create \
-	--dbname=$WP_DB_NAME \
-	--dbuser=$WP_DB_USER \
-	--dbpass=$WP_DB_PWD \
-	--dbhost=$MYSQL_HOST \
-	--path=/var/www/html \
-	--force
+    --dbname=$WP_DB_NAME \
+    --dbuser=$WP_DB_USER \
+    --dbpass=$WP_DB_PWD \
+    --dbhost=$MYSQL_HOST \
+    --path=/var/www/html/ \
+    --force
 
+# Install WordPress and feed db config
 wp core install \
-	--url=$DOMAIN_NAME \
-	--title=$WP_TITLE \
-	--admin_user=$WP_ADMIN \
-	--admin_password=$WP_ADMIN_PWD \
-	--admin_email=$WP_ADMIN_EMAIL \
-	--path=/var/www/html \
-	--allow-root \
-	--skip-email
+    --url=$DOMAIN_NAME \
+    --title=$WP_TITLE \
+    --admin_user=$WP_ADMIN_USR \
+    --admin_password=$WP_ADMIN_PWD \
+    --admin_email=$WP_ADMIN_EMAIL \
+    --allow-root \
+    --skip-email \
+    --path=/var/www/html/
 
-wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PWD --path=/var/www/html --allow-root
+# Create WordPress user
+wp user create \
+    $WP_USR \
+    $WP_EMAIL \
+    --role=author \
+    --user_pass=$WP_PWD \
+    --allow-root
 
-wp theme install neve \
-	--activate \
-	--allow-root
+# Install theme for WordPress
+wp theme install neve  \
+    --activate \
+    --allow-root
 
-wp plhugin update --all
+# Update plugins
+wp plugin update --all
 
-wp option update siteurl "http://$DOMAIN_NAME" --allow-root
-wp option update home "http://$DOMAIN_NAME" --allow-root
+# Update WP address and site address to match our domain
+wp option update siteurl "https://$DOMAIN_NAME" --allow-root
+wp option update home "https://$DOMAIN_NAME" --allow-root
 
-chown -R nginx:nginx /var/www/html
+# Transfer ownership to the user
+chown -R nginx:nginx /var/www/html/
 
-chmod -R 755 /var/www/html
+# Full permissions for owner, read/exec to others
+chmod -R 755 /var/www/html/
 
-php-fpm7
-
-
-
-
+# Fire up PHP-FPM (-F to keep in foreground and avoid recalling script)
+php-fpm8 -F
