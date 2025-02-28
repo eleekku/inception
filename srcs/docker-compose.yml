@@ -28,7 +28,7 @@ services:
         volumes:
             - wordpress:/var/www/html
         env_file:
-            - ../.env
+            - .env
         networks:
             - inception
         restart: always
@@ -45,7 +45,7 @@ services:
         networks:
             - inception
         env_file:
-            - ../.env
+            - .env
         restart: always
 
     mariadb:
@@ -60,5 +60,5 @@ services:
         networks:
             - inception
         env_file:
-            - ../.env
+            - .env
         restart: always
