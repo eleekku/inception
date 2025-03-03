@@ -74,6 +74,10 @@ wp plugin update --all
 wp option update siteurl "https://$DOMAIN_NAME" --allow-root
 wp option update home "https://$DOMAIN_NAME" --allow-root
 
+# Set permalink structure
+wp rewrite structure '/%postname%/' --allow-root
+wp rewrite flush --allow-root
+
 # Transfer ownership to the user
 chown -R nginx:nginx /var/www/html/
 
