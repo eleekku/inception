@@ -22,7 +22,7 @@ RUN ln -sf /usr/bin/php82 /usr/bin/php
 
 RUN mkdir -p /run/php /var/www/html
 
-COPY ./requirements/wordpress/conf/www.conf /etc/php8/php-fpm.d/www.conf
+COPY ./requirements/wordpress/conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 COPY ./requirements/wordpress/tools/wpscript.sh /tmp/wpscript.sh
 
