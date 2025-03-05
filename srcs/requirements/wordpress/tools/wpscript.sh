@@ -7,7 +7,7 @@ attempts=0
 while ! mariadb -h$MYSQL_HOST -u$WP_DB_USER -p$WP_DB_PWD $WP_DB_NAME &>/dev/null; do
     attempts=$((attempts + 1))
     echo "MariaDB unavailable. Attempt $attempts: Trying again in 5 sec."
-    if [ $attempts -ge 12 ]; then
+    if [ $attempts -ge 10 ]; then
         echo "Max attempts reached. MariaDB connection could not be established."
         exit 1
     fi
@@ -16,9 +16,9 @@ done
 echo "MariaDB connection established!"
 
 echo "Listing databases:"
-mariadb -h$MYSQL_HOST -u$WP_DB_USER -p$WP_DB_PWD $WP_DB_NAME <<EOF
+mariadb -h$MYSQL_HOST -u$WP_DB_USER -p$WP_DB_PWD $WP_DB_NAME << lim
 SHOW DATABASES;
-EOF
+lim
 
 # Set working dir
 cd /var/www/html/
@@ -63,7 +63,7 @@ wp user create \
     --allow-root
 
 # Install theme for WordPress
-wp theme install neve  \
+wp theme install oceanic  \
     --activate \
     --allow-root
 
