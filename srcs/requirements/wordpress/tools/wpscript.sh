@@ -47,7 +47,7 @@ wp config create \
 wp core install \
     --url=$DOMAIN_NAME \
     --title=$WP_TITLE \
-    --admin_user=$WP_ADMIN_USR \
+    --admin_user=$WP_ADMIN \
     --admin_password=$WP_ADMIN_PWD \
     --admin_email=$WP_ADMIN_EMAIL \
     --allow-root \
@@ -57,9 +57,9 @@ wp core install \
 # Create WordPress user
 wp user create \
     $WP_USR \
-    $WP_EMAIL \
+    $WP_USER_EMAIL \
     --role=author \
-    --user_pass=$WP_PWD \
+    --user_pass=$WP_USER_PWD \
     --allow-root
 
 # Install theme for WordPress
