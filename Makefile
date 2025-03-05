@@ -9,8 +9,8 @@ clean:
 	docker-compose -f srcs/docker-compose.yml down --rmi all -v
 
 fclean: clean
-	rm -rf /home/esalmela/data/mariadb
-	rm -rf /home/esalmela/data/wordpress
+	sudo rm -rf /home/esalmela/data/mariadb
+	sudo rm -rf /home/esalmela/data/wordpress
 	docker system prune -f
 
 re: fclean all
