@@ -7,7 +7,7 @@ chown -R mysql:mysql /var/log/mysql
 chown -R mysql:mysql /var/lib/mysql
 
 # init database
-mysqld --initialize --user=mysql --datadir=/var/lib/mysql
+mariadb-install-db --user=mysql --datadir=/var/lib/mysql
 
 # Enforce root pw, create db, add user, give rights
 mysqld --user=mysql --bootstrap << lim
