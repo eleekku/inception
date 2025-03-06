@@ -10,7 +10,7 @@ chown -R mysql:mysql /var/lib/mysql
 mariadb-install-db --user=mysql --datadir=/var/lib/mysql
 
 # Enforce root pw, create db, add user, give rights
-mysqld --user=mysql --bootstrap << lim
+mariadb --user=mysql --bootstrap << lim
 USE mysql;
 FLUSH PRIVILEGES;
 
@@ -34,4 +34,4 @@ GRANT SELECT ON mysql.* TO '$WP_DB_USER'@'%';
 FLUSH PRIVILEGES;
 lim
 
-exec mysqld --defaults-file=/etc/my.cnf.d/mariadb-server.cnf
+exec mariadb --defaults-file=/etc/my.cnf.d/mariadb-server.cnf
