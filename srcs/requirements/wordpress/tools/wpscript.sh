@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "memory_limit = 512M" >> /etc/php82/php.ini
+echo "memory_limit = 512M" >> /etc/php83/php.ini
 
 # Wait for MariaDB to be ready
 attempts=0
@@ -85,6 +85,6 @@ chown -R nginx:nginx /var/www/html/
 chmod -R 755 /var/www/html/
 
 # Fire up PHP-FPM (-F to keep in foreground and avoid recalling script)
-php-fpm82 -F
+php-fpm83 -F
 
 echo "Wordpress installed succesfully"

@@ -4,25 +4,23 @@ RUN addgroup -S nginx && \
     adduser -S -G nginx nginx
 
 RUN apk update && apk add --no-cache \
-	php82 \
-	php82-phar \
-	php82-curl \
-	php82-fpm \
-	php82-mysqli \
-	php82-mbstring \
-	php82-json \
-	php82-gd \
-	php82-xml \
-	php82-zip \
+	php83 \
+	php83-phar \
+	php83-curl \
+	php83-fpm \
+	php83-mysqli \
+	php83-mbstring \
+	php83-mbstring \
+	php83-tokenizer \
 	mariadb-client
 
 EXPOSE 9000
 
-RUN ln -sf /usr/bin/php82 /usr/bin/php
+RUN ln -sf /usr/bin/php83 /usr/bin/php
 
 RUN mkdir -p /run/php /var/www/html
 
-COPY ./requirements/wordpress/conf/www.conf /etc/php82/php-fpm.d/www.conf
+COPY ./requirements/wordpress/conf/www.conf /etc/php83/php-fpm.d/www.conf
 
 COPY ./requirements/wordpress/tools/wpscript.sh /tmp/wpscript.sh
 
